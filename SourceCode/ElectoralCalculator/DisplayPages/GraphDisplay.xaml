@@ -1,0 +1,29 @@
+﻿<Page x:Class="ElectoralCalculator.DisplayPages.GraphDisplay"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ElectoralCalculator.DisplayPages"
+      xmlns:controls="clr-namespace:KeyhanControls.Chart;assembly=KeyhanControls"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="1000"
+      Background="White"
+      Title="GraphDisplay">
+    <Page.Resources>
+        <local:Bool2Visibility x:Key="B2V"/>
+    </Page.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+        <controls:BarChart x:Name="BarChart" LegendPropertyName="EntryName" VerticalPropertyName="Value" HorizontalPropertyName="X" FontFamily="Tahoma"/>
+        <Border Grid.Column="1" BorderBrush="DarkGray" BorderThickness="1" Margin="10">
+            <StackPanel Margin="5">
+                <CheckBox Content="Show values" IsChecked="{Binding Path=ValueVisibility, ElementName=BarChart, Converter={StaticResource B2V}}" />
+                <CheckBox Content="Show Legends" IsChecked="{Binding Path=LegendsVisibility, ElementName=BarChart, Converter={StaticResource B2V}}" />
+                <CheckBox Content="Can change visibility" IsChecked="{Binding Path=CanChangeLegendVisibility, ElementName=BarChart, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>

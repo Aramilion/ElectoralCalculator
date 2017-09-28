@@ -1,0 +1,23 @@
+﻿<Window x:Class="ElectoralCalculator.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ElectoralCalculator"
+        mc:Ignorable="d"
+        Title="LoginWindow" Height="287.143" Width="281.596"
+        MinHeight="280" MinWidth="280">
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="auto">
+        <TextBlock Text="ELECTORAL CALCULATOR" FontSize="15" HorizontalAlignment="Center" Margin="5,5,5,20" Foreground="Orange" FontWeight="Medium"/>
+        <TextBlock Text="Name" FontSize="15"  FontWeight="Medium"/>
+        <TextBox Name="nameTexBox" Margin="0, 0, 0, 3"/>
+        <TextBlock Text="Surname" FontSize="15"  FontWeight="Medium"/>
+        <TextBox Name="surnameTexBox" Margin="0, 0, 0, 3"/>
+        <TextBlock Text="PESEL" FontSize="15"  FontWeight="Medium"/>
+        <TextBox Name="peselTexBox" Margin="0, 0, 0, 3"/>
+        <Button Margin="3, 10, 3, 3" Width="100" Click="LoginButton_Click" IsDefault="True" Foreground="White"
+                Background ="{StaticResource ResourceKey=ButtonBrush}">
+            <TextBlock Text="LOGIN" FontWeight="Medium"/>
+        </Button>
+    </StackPanel>
+</Window>

@@ -1,0 +1,209 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ElectionsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Candidates">
+          <Key>
+            <PropertyRef Name="idcandidates" />
+          </Key>
+          <Property Name="idcandidates" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="90" Nullable="false" />
+          <Property Name="party" Type="nvarchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Electorate">
+          <Key>
+            <PropertyRef Name="idelectorate" />
+          </Key>
+          <Property Name="idelectorate" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nchar" MaxLength="128" Nullable="false" />
+          <Property Name="surname" Type="nchar" MaxLength="128" Nullable="false" />
+          <Property Name="pesel" Type="nchar" MaxLength="128" Nullable="false" />
+          <Property Name="voted" Type="tinyint" Nullable="false" />
+          <Property Name="logged" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Loginattemps">
+          <Key>
+            <PropertyRef Name="idloginattemps" />
+          </Key>
+          <Property Name="idloginattemps" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="date" Type="datetime" Nullable="false" />
+          <Property Name="pesel" Type="nchar" MaxLength="128" />
+          <Property Name="succesful" Type="tinyint" Nullable="false" />
+          <Property Name="valid" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Votes">
+          <Key>
+            <PropertyRef Name="idvotes" />
+          </Key>
+          <Property Name="idvotes" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="date" Type="datetime" Nullable="false" />
+          <Property Name="idcandidate" Type="int" />
+          <Property Name="valid" Type="tinyint" Nullable="false" />
+          <Property Name="withRights" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_votes_candidates">
+          <End Role="Candidates" Type="Self.Candidates" Multiplicity="0..1" />
+          <End Role="Votes" Type="Self.Votes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Candidates">
+              <PropertyRef Name="idcandidates" />
+            </Principal>
+            <Dependent Role="Votes">
+              <PropertyRef Name="idcandidate" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ElectionsModelStoreContainer">
+          <EntitySet Name="Candidates" EntityType="Self.Candidates" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Electorate" EntityType="Self.Electorate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Loginattemps" EntityType="Self.Loginattemps" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Votes" EntityType="Self.Votes" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_votes_candidates" Association="Self.FK_votes_candidates">
+            <End Role="Candidates" EntitySet="Candidates" />
+            <End Role="Votes" EntitySet="Votes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ElectionsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Candidate">
+          <Key>
+            <PropertyRef Name="idcandidates" />
+          </Key>
+          <Property Name="idcandidates" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="90" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="party" Type="String" MaxLength="45" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Votes" Relationship="Self.FK_votes_candidates" FromRole="Candidates" ToRole="Votes" />
+        </EntityType>
+        <EntityType Name="Electorate">
+          <Key>
+            <PropertyRef Name="idelectorate" />
+          </Key>
+          <Property Name="idelectorate" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="surname" Type="String" MaxLength="128" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="pesel" Type="String" MaxLength="128" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="voted" Type="Byte" Nullable="false" />
+          <Property Name="logged" Type="Byte" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Loginattemp">
+          <Key>
+            <PropertyRef Name="idloginattemps" />
+          </Key>
+          <Property Name="idloginattemps" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="pesel" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
+          <Property Name="succesful" Type="Byte" Nullable="false" />
+          <Property Name="valid" Type="Byte" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Vote">
+          <Key>
+            <PropertyRef Name="idvotes" />
+          </Key>
+          <Property Name="idvotes" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="idcandidate" Type="Int32" />
+          <Property Name="valid" Type="Byte" Nullable="false" />
+          <Property Name="withRights" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="Candidate" Relationship="Self.FK_votes_candidates" FromRole="Votes" ToRole="Candidates" />
+        </EntityType>
+        <Association Name="FK_votes_candidates">
+          <End Role="Candidates" Type="Self.Candidate" Multiplicity="0..1" />
+          <End Role="Votes" Type="Self.Vote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Candidates">
+              <PropertyRef Name="idcandidates" />
+            </Principal>
+            <Dependent Role="Votes">
+              <PropertyRef Name="idcandidate" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ElectionsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Candidates" EntityType="Self.Candidate" />
+          <EntitySet Name="Electorates" EntityType="Self.Electorate" />
+          <EntitySet Name="Loginattemps" EntityType="Self.Loginattemp" />
+          <EntitySet Name="Votes" EntityType="Self.Vote" />
+          <AssociationSet Name="FK_votes_candidates" Association="Self.FK_votes_candidates">
+            <End Role="Candidates" EntitySet="Candidates" />
+            <End Role="Votes" EntitySet="Votes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ElectionsModelStoreContainer" CdmEntityContainer="ElectionsEntities">
+          <EntitySetMapping Name="Candidates">
+            <EntityTypeMapping TypeName="ElectionsModel.Candidate">
+              <MappingFragment StoreEntitySet="Candidates">
+                <ScalarProperty Name="idcandidates" ColumnName="idcandidates" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="party" ColumnName="party" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Electorates">
+            <EntityTypeMapping TypeName="ElectionsModel.Electorate">
+              <MappingFragment StoreEntitySet="Electorate">
+                <ScalarProperty Name="idelectorate" ColumnName="idelectorate" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="pesel" ColumnName="pesel" />
+                <ScalarProperty Name="voted" ColumnName="voted" />
+                <ScalarProperty Name="logged" ColumnName="logged" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Loginattemps">
+            <EntityTypeMapping TypeName="ElectionsModel.Loginattemp">
+              <MappingFragment StoreEntitySet="Loginattemps">
+                <ScalarProperty Name="idloginattemps" ColumnName="idloginattemps" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="pesel" ColumnName="pesel" />
+                <ScalarProperty Name="succesful" ColumnName="succesful" />
+                <ScalarProperty Name="valid" ColumnName="valid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Votes">
+            <EntityTypeMapping TypeName="ElectionsModel.Vote">
+              <MappingFragment StoreEntitySet="Votes">
+                <ScalarProperty Name="idvotes" ColumnName="idvotes" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="idcandidate" ColumnName="idcandidate" />
+                <ScalarProperty Name="valid" ColumnName="valid" />
+                <ScalarProperty Name="withRights" ColumnName="withRights" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

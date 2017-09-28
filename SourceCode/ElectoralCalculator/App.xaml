@@ -1,0 +1,13 @@
+﻿<Application x:Class="ElectoralCalculator.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:ElectoralCalculator"
+             StartupUri="LoginWindow.xaml"
+             Exit="Application_Exit">
+    <Application.Resources>
+        <LinearGradientBrush x:Key="ButtonBrush" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="Orange" Offset="0.0" />
+            <GradientStop Color="OrangeRed" Offset="2.0" />
+        </LinearGradientBrush>
+    </Application.Resources>
+</Application>
